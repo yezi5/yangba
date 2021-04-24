@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guli.eduservice.mapper.CourseViewCountMapper">
+
+    <update id="update" parameterType="hashmap">
+        update course_view_count
+        set view_count = #{viewCount}
+        where course_id = #{courseId}
+    </update>
+
+</mapper>

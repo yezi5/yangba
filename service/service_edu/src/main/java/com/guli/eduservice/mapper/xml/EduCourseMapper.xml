@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guli.eduservice.mapper.EduCourseMapper">
+
+    <select id="getPublishCourseInfo" resultType="com.guli.eduservice.pojo.vo.CoursePublishVo">
+        select ec.id         as id,
+               ec.title      as title,
+               ec.cover      as cover,
+               ec.lesson_num as lesson_num,
+               es2.title     as subjectLevelOne,
+               es1.title     as subjectLevelTwo,
+               e.name        as teacherName,
+               ec.price      as price
+        from edu_course ec
+                 left join edu_subject es1 on ec.subject_id = es1.id
+                 left join edu_subject es2 on es1.parent_id = es2.id
+                 left join edu_teacher e on ec.teacher_id = e.id
+        where ec.id = #{courseId}
+    </select>
+
+    <select id="getBaseCourseInfo" resultType="com.guli.eduservice.pojo.front.CourseWebVo">
+        select ec.id as id,
+           ec.title as title,
+           price,
+           lesson_num,
+           cover,
+           buy_count,
+           description,
+           ec.teacher_id as teacherId,
+           name as teacherName,
+           intro,
+           avatar,
+           ect1.id as subjectLevelOneId,
+           ect1.title as subjectLevelOne,
+           ect2.id as subjectLevelTwoId,
+           ect2.title as subjectLevelTwo
+        from edu_course ec
+                 left join edu_course_description ecd
+                                 on ec.id = ecd.id
+                 left join edu_teacher et
+                                 on ec.teacher_id = et.id
+                 left join edu_subject ect1
+                                 on ec.subject_parent_id = ect1.id
+                 left join edu_subject ect2
+                                 on ec.subject_id = ect2.id
+        where ec.id = #{courseId};
+    </select>
+
+    <select id="selectList" parameterType="hashmap" resultType="com.guli.eduservice.pojo.course.CourseListVo">
+        select
+               ec.id as id,
+               title,
+               price,
+               cover,
+               version,
+               buy_count,
+               cvc.view_count as viewCount,
+               gmt_create
+        from edu_course ec
+            left join course_view_count cvc on ec.id = cvc.course_id
+        where ec.status = #{status}
+        order by cvc.view_count desc
+        limit #{count}
+    </select>
+
+    <select id="getCourseListVo" parameterType="hashmap" resultType="com.guli.eduservice.pojo.course.CourseListVo">
+        select
+            ec.id as id,
+            title,
+            price,
+            cover,
+            version,
+            buy_count,
+            cvc.view_count as viewCount,
+            gmt_create
+        from edu_course ec
+                 left join course_view_count cvc on ec.id = cvc.course_id
+        where ec.status = #{status}
+            and teacher_id = #{teacherId}
+    </select>
+</mapper>

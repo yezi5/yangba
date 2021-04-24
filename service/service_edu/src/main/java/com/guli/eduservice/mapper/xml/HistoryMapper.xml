@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guli.eduservice.mapper.HistoryMapper">
+
+
+    <select id="findNew" parameterType="int" resultType="com.guli.eduservice.pojo.History">
+        select *
+        from history
+        order by gmt_create desc
+        limit 8
+    </select>
+
+</mapper>

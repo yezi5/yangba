@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guli.admin.mapper.RoleMapper">
+
+    <select id="listRoleNameByUserId" parameterType="string" resultType="string">
+        select role_name
+        from role
+        left join user_role on role.role_id = user_role.role_id
+        left join acl_user on acl_user.user_id = user_role.user_id
+        where acl_user.user_id = #{userId}
+    </select>
+
+</mapper>

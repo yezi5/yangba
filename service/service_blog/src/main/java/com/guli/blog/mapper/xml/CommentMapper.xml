@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guli.blog.mapper.CommentMapper">
+
+    <select id="getChildList" parameterType="string" resultType="com.guli.blog.pojo.vo.CommentChildVo">
+        select child.*
+        from blog_comment parent
+                 left join blog_comment child on child.common_parent_id = parent.id
+        where parent.id = #{parentId}
+    </select>
+</mapper>
