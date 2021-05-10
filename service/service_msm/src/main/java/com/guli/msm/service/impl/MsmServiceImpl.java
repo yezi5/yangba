@@ -19,7 +19,7 @@ import java.util.Map;
 public class MsmServiceImpl implements MsmService {
     @Override
     public boolean sendCode(String phone, Map<String, Object> param) {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4GKvHQmEEbLxTf8ARFnC", "Xd2pV9eaj5SSQKu9QyDuHt6a4yOmWb");
+        DefaultProfile profile = DefaultProfile.getProfile("", "", "");
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
